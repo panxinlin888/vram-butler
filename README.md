@@ -73,6 +73,9 @@ pwsh 显存查看与释放.ps1 -后台 -目标程序 "msedge,chrome,wechat" -结
 pwsh 显存查看与释放.ps1 -后台 -目标程序 "msedge,chrome,wechat" -已授权 -结果文件 vram.json
 ```
 
+- Read-only listing: `-后台 -列表` (no process is ended, ideal for seeing who holds VRAM first)
+- Requirement gate: `-需求MB 12000` checks free VRAM after release and reports it in `满足`
+- Full parameters, JSON fields and exit codes: see [智能体接口.md](智能体接口.md)
 - Without `-已授权` it is a dry run: it lists the matching processes and the VRAM they hold, and ends nothing
 - With `-已授权` it ends the matched processes, re-reads the whole-card usage and writes the result
 - Targets are exact process names, comma-separated, case-insensitive

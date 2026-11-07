@@ -2,9 +2,13 @@
     [int]$下限MB = 100,
     [int]$自动关闭秒 = 0,
     [switch]$后台,
+    [switch]$列表,
     [string]$目标程序 = '',
     [switch]$已授权,
-    [string]$结果文件 = ''
+    [string]$结果文件 = '',
+    [int]$需求MB = 0,
+    [int]$等待秒 = 1,
+    [switch]$帮助
 )
 
 $ErrorActionPreference = 'Stop'
@@ -164,12 +168,28 @@ function 取整卡($文本参数 = $null) {
 
 $系统守卫 = @('system','registry','dwm','csrss','wininit','winlogon','services','lsass','smss','fontdrvhost','secure system','memory compression')
 
+function 输出帮助 {
+    [Console]::WriteLine('显存管家 v1.00 · 智能体接口')
+    [Console]::WriteLine('图形界面：直接双击 显存管家.exe')
+    [Console]::WriteLine('只读列表：-后台 -列表 [-结果文件 out.json]')
+    [Console]::WriteLine('释放显存：-后台 -目标程序 "chrome,msedge" [-已授权] [-等待秒 1] [-需求MB 12000] [-结果文件 out.json]')
+    [Console]::WriteLine('规则：不带 -已授权 只预演；系统核心组件、explorer、智能体宿主始终受保护')
+    [Console]::WriteLine('退出码：0 正常，1 有结束失败，2 参数错误')
+}
+
 function 输出无人值守结果($结果) {
     if ($结果文件) {
         $json = $结果 | ConvertTo-Json -Depth 6
         [System.IO.File]::WriteAllText($结果文件, $json, (New-Object System.Text.UTF8Encoding($false)))
     }
     [Console]::WriteLine('显存管家 v1.00 · ' + $结果.模式)
+    if ($结果.模式 -eq '列表') {
+        foreach ($项 in $结果.进程列表) {
+            [Console]::WriteLine($项.名称 + ' PID ' + $项.进程号 + ' 专用 ' + $项.专用MB + ' MB')
+        }
+        [Console]::WriteLine('整卡总MB=' + $结果.整卡总MB + ' 整卡用MB=' + $结果.整卡用MB + ' 空闲MB=' + $结果.空闲MB)
+        return
+    }
     foreach ($项 in $结果.命中进程) {
         [Console]::WriteLine('命中 ' + $项.名称 + ' PID ' + $项.进程号 + ' 专用 ' + $项.专用MB + ' MB')
     }
@@ -177,24 +197,48 @@ function 输出无人值守结果($结果) {
     foreach ($句 in $结果.错误) { [Console]::WriteLine('错误 ' + $句) }
     [Console]::WriteLine('释放专用MB=' + $结果.释放专用MB)
     [Console]::WriteLine('整卡前MB=' + $结果.整卡前MB + ' 整卡后MB=' + $结果.整卡后MB)
+    [Console]::WriteLine('空闲前MB=' + $结果.空闲前MB + ' 空闲后MB=' + $结果.空闲后MB)
+    if ($null -ne $结果.满足) { [Console]::WriteLine('需求MB=' + $结果.需求MB + ' 满足=' + $结果.满足) }
 }
 
 function 无人值守 {
+    $整卡前 = 取整卡
+    $空闲前 = 0
+    if ($整卡前.总 -gt 0) { $空闲前 = [int]([Math]::Max(0, ($整卡前.总 - $整卡前.用))) }
+    if ($列表) {
+        $行 = @(取进程显存)
+        $表 = [ordered]@{
+            版本 = '1.00'
+            时间 = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+            模式 = '列表'
+            整卡总MB = [int]$整卡前.总
+            整卡用MB = [int]$整卡前.用
+            空闲MB = $空闲前
+            进程列表 = @()
+            错误 = @()
+        }
+        foreach ($进程 in $行) {
+            $表.进程列表 += [ordered]@{ 进程号 = $进程.进程号; 名称 = $进程.名称; 专用MB = [int]$进程.专用; 共享MB = [int]$进程.共享; 路径 = $进程.路径 }
+        }
+        输出无人值守结果 $表
+        return 0
+    }
     $目标名 = @($目标程序 -split ',' | ForEach-Object { $_.Trim().ToLower() } | Where-Object { $_ })
     if ($目标名.Count -eq 0) {
         [Console]::WriteLine('未指定目标程序，例如：-目标程序 "chrome,msedge"')
         if ($结果文件) {
-            $空 = [ordered]@{ 版本 = '1.00'; 模式 = '参数错误'; 目标 = @(); 命中进程 = @(); 已结束 = @(); 跳过保护 = @(); 释放专用MB = 0; 整卡前MB = 0; 整卡后MB = 0; 错误 = @('未指定目标程序') }
+            $空 = [ordered]@{ 版本 = '1.00'; 模式 = '参数错误'; 目标 = @(); 命中进程 = @(); 已结束 = @(); 跳过保护 = @(); 释放专用MB = 0; 整卡前MB = 0; 整卡后MB = 0; 空闲前MB = 0; 空闲后MB = 0; 需求MB = 0; 满足 = $null; 等待秒 = 0; 错误 = @('未指定目标程序') }
             [System.IO.File]::WriteAllText($结果文件, ($空 | ConvertTo-Json -Depth 6), (New-Object System.Text.UTF8Encoding($false)))
         }
         return 2
     }
     $保护 = @($系统守卫) + @('explorer','pwsh','powershell','windowsterminal','conhost','qoder','qoder cn','node','显存管家')
     $前 = 取进程显存
-    $整卡前 = 取整卡
     $命中 = @($前 | Where-Object { $目标名 -contains $_.名称.ToLower() })
     $计划 = @($命中 | Where-Object { $保护 -notcontains $_.名称.ToLower() })
     $跳过 = @($命中 | Where-Object { $保护 -contains $_.名称.ToLower() } | ForEach-Object { $_.名称 })
+    $满足前 = $null
+    if ($需求MB -gt 0 -and $整卡前.总 -gt 0) { $满足前 = $空闲前 -ge $需求MB }
     $结果 = [ordered]@{
         版本 = '1.00'
         时间 = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
@@ -206,6 +250,11 @@ function 无人值守 {
         释放专用MB = 0
         整卡前MB = [int]$整卡前.用
         整卡后MB = [int]$整卡前.用
+        空闲前MB = $空闲前
+        空闲后MB = $空闲前
+        需求MB = $需求MB
+        满足 = $满足前
+        等待秒 = $等待秒
         错误 = @()
     }
     foreach ($进程 in $计划) {
@@ -226,15 +275,24 @@ function 无人值守 {
             $结果.错误 += ($进程.名称 + ': ' + $_.Exception.Message)
         }
     }
-    Start-Sleep -Milliseconds 900
+    if ($等待秒 -gt 0) { Start-Sleep -Seconds $等待秒 }
     $整卡后 = 取整卡
+    $空闲后 = 0
+    if ($整卡后.总 -gt 0) { $空闲后 = [int]([Math]::Max(0, ($整卡后.总 - $整卡后.用))) }
     $结果.整卡后MB = [int]$整卡后.用
+    $结果.空闲后MB = $空闲后
+    if ($需求MB -gt 0 -and $整卡后.总 -gt 0) { $结果.满足 = $空闲后 -ge $需求MB }
     $已结束和 = ($计划 | Where-Object { $结果.已结束 -contains $_.名称 } | Measure-Object -Property 专用 -Sum).Sum
     if ($null -eq $已结束和) { $已结束和 = 0 }
     $结果.释放专用MB = [int]$已结束和
     输出无人值守结果 $结果
     if ($结果.错误.Count -gt 0) { return 1 }
     return 0
+}
+
+if ($帮助) {
+    输出帮助
+    [Environment]::Exit(0)
 }
 
 if ($后台) {
