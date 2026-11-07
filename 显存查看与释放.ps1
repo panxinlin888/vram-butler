@@ -111,6 +111,218 @@ foreach ($图标行 in ($图标池文本 -split "`n")) {
     $script:图标池 += [System.Drawing.Image]::FromStream($内存)
 }
 
+$script:语言表 = @{
+    'zh' = @{
+        '应用名' = '显存管家'
+        '语言' = '语言'
+        '加载中' = '正在读取显存信息'
+        '读取中' = '读取中…'
+        '就绪' = '就绪'
+        '结束' = '结束'
+        '系统' = '系统'
+        '取消' = '取消'
+        '仍然结束' = '仍然结束'
+        '知道了' = '知道了'
+        '结束进程' = '结束进程'
+        '危险操作' = '危险操作'
+        '出错' = '出错了'
+        '结束失败' = '结束失败'
+        '确认结束格式' = '确定结束 {0} (PID {1})？'
+        '未保存' = '未保存的工作会丢。'
+        '确认系统格式' = '确定要结束系统组件 {0} (PID {1}) 吗？'
+        '后果dwm' = '桌面窗口管理器负责桌面合成，结束后屏幕会黑屏闪断；Windows 通常会自动重启它，期间桌面和窗口会短暂消失。'
+        '后果explorer' = '文件资源管理器同时是桌面与任务栏的宿主，结束后桌面和任务栏会消失，需要手动重新启动 explorer。'
+        '后果通用' = '这是 Windows 系统核心组件，结束后可能导致蓝屏、强制注销或桌面丢失，未保存的工作会全部消失。'
+        '需管理员' = '可能需要以管理员身份运行：'
+        '整卡格式' = '整卡 {0:N2} / {1:N2} GB · 已用 {2:N0}%'
+        '未读到格式' = '专用合计 {0:N0} MB · 整卡总量未读到'
+        '状态格式' = '{0} 个进程 · 专用合计 {1:N0} MB'
+        '专用' = '专用'
+        '共享' = '共享'
+        '已退出' = '(已退出)'
+        'Windows进程' = 'Windows 进程'
+        '跟随系统' = '跟随系统'
+    }
+    'en' = @{
+        '应用名' = 'VRAM Butler'
+        '语言' = 'Language'
+        '加载中' = 'Reading VRAM information'
+        '读取中' = 'Reading…'
+        '就绪' = 'Ready'
+        '结束' = 'End'
+        '系统' = 'System'
+        '取消' = 'Cancel'
+        '仍然结束' = 'End anyway'
+        '知道了' = 'OK'
+        '结束进程' = 'End process'
+        '危险操作' = 'Dangerous action'
+        '出错' = 'Something went wrong'
+        '结束失败' = 'Failed to end process'
+        '确认结束格式' = 'End {0} (PID {1})?'
+        '未保存' = 'Unsaved work will be lost.'
+        '确认系统格式' = 'End system component {0} (PID {1})?'
+        '后果dwm' = 'Desktop Window Manager composes the desktop. Ending it briefly blanks the screen; Windows usually restarts it, and the desktop and windows disappear for a moment.'
+        '后果explorer' = 'File Explorer also hosts the desktop and taskbar. Ending it removes both, and explorer must be restarted manually.'
+        '后果通用' = 'This is a core Windows component. Ending it can cause a blue screen, forced sign-out or desktop loss, and all unsaved work will be lost.'
+        '需管理员' = 'This may require running as administrator:'
+        '整卡格式' = 'Whole card {0:N2} / {1:N2} GB · used {2:N0}%'
+        '未读到格式' = 'Dedicated total {0:N0} MB · whole-card total unavailable'
+        '状态格式' = '{0} processes · dedicated total {1:N0} MB'
+        '专用' = 'Dedicated'
+        '共享' = 'Shared'
+        '已退出' = '(exited)'
+        'Windows进程' = 'Windows process'
+        '跟随系统' = 'Follow system'
+    }
+    'ja' = @{
+        '应用名' = 'VRAMマネージャー'
+        '语言' = '言語'
+        '加载中' = 'VRAM情報を読み込み中'
+        '读取中' = '読み込み中…'
+        '就绪' = '準備完了'
+        '结束' = '終了'
+        '系统' = 'システム'
+        '取消' = 'キャンセル'
+        '仍然结束' = 'それでも終了'
+        '知道了' = '了解'
+        '结束进程' = 'プロセスを終了'
+        '危险操作' = '危険な操作'
+        '出错' = 'エラーが発生しました'
+        '结束失败' = '終了できませんでした'
+        '确认结束格式' = '{0} (PID {1}) を終了しますか？'
+        '未保存' = '保存していない作業は失われます。'
+        '确认系统格式' = 'システムコンポーネント {0} (PID {1}) を終了しますか？'
+        '后果dwm' = 'デスクトップ ウィンドウ マネージャーはデスクトップ合成を担当します。終了すると画面が一瞬黒くなり、通常は Windows が自動で再起動しますが、その間デスクトップとウィンドウは一時的に消えます。'
+        '后果explorer' = 'エクスプローラーはデスクトップとタスクバーのホストでもあります。終了すると両方が消え、手動で explorer を再起動する必要があります。'
+        '后果通用' = 'これは Windows のコア コンポーネントです。終了するとブルースクリーン、強制サインアウト、デスクトップの消失が起こる可能性があり、保存していない作業は失われます。'
+        '需管理员' = '管理者として実行する必要がある場合があります：'
+        '整卡格式' = 'カード全体 {0:N2} / {1:N2} GB · 使用率 {2:N0}%'
+        '未读到格式' = '専用合計 {0:N0} MB · カード総量を取得できません'
+        '状态格式' = '{0} 個のプロセス · 専用合計 {1:N0} MB'
+        '专用' = '専用'
+        '共享' = '共有'
+        '已退出' = '(終了済み)'
+        'Windows进程' = 'Windows プロセス'
+        '跟随系统' = 'システムに従う'
+    }
+    'ko' = @{
+        '应用名' = 'VRAM 매니저'
+        '语言' = '언어'
+        '加载中' = 'VRAM 정보를 읽는 중'
+        '读取中' = '읽는 중…'
+        '就绪' = '준비됨'
+        '结束' = '종료'
+        '系统' = '시스템'
+        '取消' = '취소'
+        '仍然结束' = '그래도 종료'
+        '知道了' = '확인'
+        '结束进程' = '프로세스 종료'
+        '危险操作' = '위험한 작업'
+        '出错' = '오류가 발생했습니다'
+        '结束失败' = '종료 실패'
+        '确认结束格式' = '{0} (PID {1})을(를) 종료할까요?'
+        '未保存' = '저장하지 않은 작업은 사라집니다.'
+        '确认系统格式' = '시스템 구성 요소 {0} (PID {1})을(를) 종료할까요?'
+        '后果dwm' = '데스크톱 창 관리자는 데스크톱 합성을 담당합니다. 종료하면 화면이 잠시 검게 변하며, Windows가 보통 자동으로 다시 시작하지만 그동안 데스크톱과 창이 잠시 사라집니다.'
+        '后果explorer' = '파일 탐색기는 데스크톱과 작업 표시줄의 호스트입니다. 종료하면 둘 다 사라지며 explorer를 직접 다시 시작해야 합니다.'
+        '后果通用' = 'Windows 핵심 구성 요소입니다. 종료하면 블루 스크린, 강제 로그아웃 또는 데스크톱 손실이 발생할 수 있으며 저장하지 않은 작업은 모두 사라집니다.'
+        '需管理员' = '관리자 권한으로 실행해야 할 수 있습니다:'
+        '整卡格式' = '전체 카드 {0:N2} / {1:N2} GB · 사용 {2:N0}%'
+        '未读到格式' = '전용 합계 {0:N0} MB · 전체 카드 용량을 읽을 수 없음'
+        '状态格式' = '{0}개 프로세스 · 전용 합계 {1:N0} MB'
+        '专用' = '전용'
+        '共享' = '공유'
+        '已退出' = '(종료됨)'
+        'Windows进程' = 'Windows 프로세스'
+        '跟随系统' = '시스템 설정 따르기'
+    }
+}
+
+$script:简介表 = @{
+    'zh' = @{
+        'dwm' = '桌面窗口管理器 · 系统合成'; 'explorer' = '文件资源管理器'
+        'msedge' = 'Edge 浏览器'; '360chromex' = '360 极速浏览器'; 'chrome' = 'Chrome 浏览器'
+        'firefox' = 'Firefox 浏览器'; 'wechat' = '微信'; 'wxwork' = '企业微信'; 'qq' = 'QQ'
+        'unity' = 'Unity 编辑器'; 'python' = 'Python 运行时'; 'pwsh' = 'PowerShell 终端'
+        'powershell' = 'PowerShell 终端'; 'windowsterminal' = 'Windows 终端'; 'notepad' = '记事本'
+        'qoder cn' = 'Qoder 桌面端'; 'searchhost' = 'Windows 搜索'; 'startmenuexperiencehost' = '开始菜单'
+        'shellexperiencehost' = 'Shell 体验'; 'runtimebroker' = '系统权限代理'; 'svchost' = '系统服务宿主'
+        'conhost' = '控制台窗口'; 'textinputapp' = '输入服务'; 'audiodg' = '音频引擎'
+    }
+    'en' = @{
+        'dwm' = 'Desktop Window Manager · composition'; 'explorer' = 'File Explorer'
+        'msedge' = 'Microsoft Edge'; '360chromex' = '360 Browser'; 'chrome' = 'Google Chrome'
+        'firefox' = 'Mozilla Firefox'; 'wechat' = 'WeChat'; 'wxwork' = 'WeCom'; 'qq' = 'QQ'
+        'unity' = 'Unity Editor'; 'python' = 'Python runtime'; 'pwsh' = 'PowerShell'
+        'powershell' = 'PowerShell'; 'windowsterminal' = 'Windows Terminal'; 'notepad' = 'Notepad'
+        'qoder cn' = 'Qoder desktop'; 'searchhost' = 'Windows Search'; 'startmenuexperiencehost' = 'Start menu'
+        'shellexperiencehost' = 'Shell experience'; 'runtimebroker' = 'Runtime Broker'; 'svchost' = 'Service Host'
+        'conhost' = 'Console Window Host'; 'textinputapp' = 'Text Input'; 'audiodg' = 'Audio engine'
+    }
+    'ja' = @{
+        'dwm' = 'デスクトップ ウィンドウ マネージャー · 合成'; 'explorer' = 'エクスプローラー'
+        'msedge' = 'Microsoft Edge'; '360chromex' = '360 ブラウザ'; 'chrome' = 'Google Chrome'
+        'firefox' = 'Mozilla Firefox'; 'wechat' = 'WeChat'; 'wxwork' = 'WeCom'; 'qq' = 'QQ'
+        'unity' = 'Unity エディター'; 'python' = 'Python ランタイム'; 'pwsh' = 'PowerShell'
+        'powershell' = 'PowerShell'; 'windowsterminal' = 'Windows ターミナル'; 'notepad' = 'メモ帳'
+        'qoder cn' = 'Qoder デスクトップ'; 'searchhost' = 'Windows 検索'; 'startmenuexperiencehost' = 'スタート メニュー'
+        'shellexperiencehost' = 'Shell エクスペリエンス'; 'runtimebroker' = 'ランタイム ブローカー'; 'svchost' = 'サービス ホスト'
+        'conhost' = 'コンソール ウィンドウ'; 'textinputapp' = 'テキスト入力'; 'audiodg' = 'オーディオ エンジン'
+    }
+    'ko' = @{
+        'dwm' = '데스크톱 창 관리자 · 합성'; 'explorer' = '파일 탐색기'
+        'msedge' = 'Microsoft Edge'; '360chromex' = '360 브라우저'; 'chrome' = 'Google Chrome'
+        'firefox' = 'Mozilla Firefox'; 'wechat' = 'WeChat'; 'wxwork' = 'WeCom'; 'qq' = 'QQ'
+        'unity' = 'Unity 에디터'; 'python' = 'Python 런타임'; 'pwsh' = 'PowerShell'
+        'powershell' = 'PowerShell'; 'windowsterminal' = 'Windows 터미널'; 'notepad' = '메모장'
+        'qoder cn' = 'Qoder 데스크톱'; 'searchhost' = 'Windows 검색'; 'startmenuexperiencehost' = '시작 메뉴'
+        'shellexperiencehost' = 'Shell 환경'; 'runtimebroker' = '런타임 브로커'; 'svchost' = '서비스 호스트'
+        'conhost' = '콘솔 창'; 'textinputapp' = '텍스트 입력'; 'audiodg' = '오디오 엔진'
+    }
+}
+
+function 文($键) {
+    $表 = $script:语言表[$script:实际语言]
+    if ($表 -and $表.ContainsKey($键)) { return $表[$键] }
+    $表 = $script:语言表['en']
+    if ($表 -and $表.ContainsKey($键)) { return $表[$键] }
+    return $键
+}
+
+function 解析语言($选择) {
+    if ($选择 -in @('zh','en','ja','ko')) { return $选择 }
+    $名 = [System.Globalization.CultureInfo]::CurrentUICulture.TwoLetterISOLanguageName.ToLower()
+    if ($名 -eq 'zh') { return 'zh' }
+    if ($名 -eq 'ja') { return 'ja' }
+    if ($名 -eq 'ko') { return 'ko' }
+    return 'en'
+}
+
+function 读设置 {
+    try {
+        $路径 = Join-Path (Join-Path $env:LOCALAPPDATA '显存管家') '设置.json'
+        if (Test-Path -LiteralPath $路径) {
+            $设置 = Get-Content -LiteralPath $路径 -Raw -Encoding UTF8 | ConvertFrom-Json
+            $值 = [string]$设置.语言
+            if ($值 -in @('auto','zh','en','ja','ko')) { return $值 }
+        }
+    } catch { }
+    return 'auto'
+}
+
+function 存设置 {
+    try {
+        $目录 = Join-Path $env:LOCALAPPDATA '显存管家'
+        if (-not (Test-Path -LiteralPath $目录)) { $null = New-Item -ItemType Directory -Path $目录 -Force }
+        $路径 = Join-Path $目录 '设置.json'
+        [System.IO.File]::WriteAllText($路径, (@{ 语言 = $script:语言选择 } | ConvertTo-Json), (New-Object System.Text.UTF8Encoding($false)))
+    } catch { }
+}
+
+$script:语言选择 = 读设置
+$script:实际语言 = 解析语言 $script:语言选择
+$script:上次进程表 = @()
+$script:语言窗 = $null
 $底色    = [System.Drawing.Color]::FromArgb(27, 28, 31)
 $卡片色  = [System.Drawing.Color]::FromArgb(38, 39, 43)
 $悬停色  = [System.Drawing.Color]::FromArgb(46, 47, 52)
@@ -146,7 +358,7 @@ function 取进程显存($样本参数 = $null) {
         if (($专用值 + $共享值) -lt $下限MB) { continue }
         $进程 = $null
         try { $进程 = Get-Process -Id $号 -ErrorAction Stop } catch { }
-        $名称 = if ($进程) { $进程.ProcessName } else { '(已退出)' }
+        $名称 = if ($进程) { $进程.ProcessName } else { 文('已退出') }
         $路径 = ''
         try { if ($进程 -and $进程.Path) { $路径 = $进程.Path } } catch { }
         $结果 += [pscustomobject]@{ 进程号 = $号; 名称 = $名称; 专用 = $专用值; 共享 = $共享值; 路径 = $路径 }
@@ -169,7 +381,7 @@ function 取整卡($文本参数 = $null) {
 $系统守卫 = @('system','registry','dwm','csrss','wininit','winlogon','services','lsass','smss','fontdrvhost','secure system','memory compression')
 
 function 输出帮助 {
-    [Console]::WriteLine('显存管家 v1.00 · 智能体接口')
+    [Console]::WriteLine('显存管家 v1.01 · 智能体接口')
     [Console]::WriteLine('图形界面：直接双击 显存管家.exe')
     [Console]::WriteLine('只读列表：-后台 -列表 [-结果文件 out.json]')
     [Console]::WriteLine('释放显存：-后台 -目标程序 "chrome,msedge" [-已授权] [-等待秒 1] [-需求MB 12000] [-结果文件 out.json]')
@@ -182,7 +394,7 @@ function 输出无人值守结果($结果) {
         $json = $结果 | ConvertTo-Json -Depth 6
         [System.IO.File]::WriteAllText($结果文件, $json, (New-Object System.Text.UTF8Encoding($false)))
     }
-    [Console]::WriteLine('显存管家 v1.00 · ' + $结果.模式)
+    [Console]::WriteLine('显存管家 v1.01 · ' + $结果.模式)
     if ($结果.模式 -eq '列表') {
         foreach ($项 in $结果.进程列表) {
             [Console]::WriteLine($项.名称 + ' PID ' + $项.进程号 + ' 专用 ' + $项.专用MB + ' MB')
@@ -208,7 +420,7 @@ function 无人值守 {
     if ($列表) {
         $行 = @(取进程显存)
         $表 = [ordered]@{
-            版本 = '1.00'
+            版本 = '1.01'
             时间 = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
             模式 = '列表'
             整卡总MB = [int]$整卡前.总
@@ -227,7 +439,7 @@ function 无人值守 {
     if ($目标名.Count -eq 0) {
         [Console]::WriteLine('未指定目标程序，例如：-目标程序 "chrome,msedge"')
         if ($结果文件) {
-            $空 = [ordered]@{ 版本 = '1.00'; 模式 = '参数错误'; 目标 = @(); 命中进程 = @(); 已结束 = @(); 跳过保护 = @(); 释放专用MB = 0; 整卡前MB = 0; 整卡后MB = 0; 空闲前MB = 0; 空闲后MB = 0; 需求MB = 0; 满足 = $null; 等待秒 = 0; 错误 = @('未指定目标程序') }
+            $空 = [ordered]@{ 版本 = '1.01'; 模式 = '参数错误'; 目标 = @(); 命中进程 = @(); 已结束 = @(); 跳过保护 = @(); 释放专用MB = 0; 整卡前MB = 0; 整卡后MB = 0; 空闲前MB = 0; 空闲后MB = 0; 需求MB = 0; 满足 = $null; 等待秒 = 0; 错误 = @('未指定目标程序') }
             [System.IO.File]::WriteAllText($结果文件, ($空 | ConvertTo-Json -Depth 6), (New-Object System.Text.UTF8Encoding($false)))
         }
         return 2
@@ -240,7 +452,7 @@ function 无人值守 {
     $满足前 = $null
     if ($需求MB -gt 0 -and $整卡前.总 -gt 0) { $满足前 = $空闲前 -ge $需求MB }
     $结果 = [ordered]@{
-        版本 = '1.00'
+        版本 = '1.01'
         时间 = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
         模式 = $(if ($已授权) { '执行' } else { '预演' })
         目标 = $目标名
@@ -302,18 +514,10 @@ if ($后台) {
 
 $script:简介缓存 = @{}
 function 友好简介($名称, $路径) {
-    $键 = "$名称|$路径"
+    $键 = "$名称|$路径|$($script:实际语言)"
     if ($script:简介缓存.ContainsKey($键)) { return $script:简介缓存[$键] }
-    $对照 = @{
-        'dwm' = '桌面窗口管理器 · 系统合成'; 'explorer' = '文件资源管理器';
-        'msedge' = 'Edge 浏览器'; '360chromex' = '360 极速浏览器'; 'chrome' = 'Chrome 浏览器';
-        'firefox' = 'Firefox 浏览器'; 'wechat' = '微信'; 'wxwork' = '企业微信'; 'qq' = 'QQ';
-        'unity' = 'Unity 编辑器'; 'python' = 'Python 运行时'; 'pwsh' = 'PowerShell 终端';
-        'powershell' = 'PowerShell 终端'; 'windowsterminal' = 'Windows 终端'; 'notepad' = '记事本';
-        'qoder cn' = 'Qoder 桌面端'; 'searchhost' = 'Windows 搜索'; 'startmenuexperiencehost' = '开始菜单';
-        'shellexperiencehost' = 'Shell 体验'; 'runtimebroker' = '系统权限代理'; 'svchost' = '系统服务宿主';
-        'conhost' = '控制台窗口'; 'textinputapp' = '输入服务'; 'audiodg' = '音频引擎';
-    }
+    $对照 = $script:简介表[$script:实际语言]
+    if (-not $对照) { $对照 = @{} }
     $简介 = $对照[$名称.ToLower()]
     if (-not $简介 -and $路径) {
         try {
@@ -321,7 +525,7 @@ function 友好简介($名称, $路径) {
             if ($版本信息.FileDescription -and $版本信息.FileDescription -ne $名称) { $简介 = $版本信息.FileDescription.Trim() }
         } catch { }
     }
-    if (-not $简介) { $简介 = 'Windows 进程' }
+    if (-not $简介) { $简介 = 文('Windows进程') }
     $script:简介缓存[$键] = $简介
     return $简介
 }
@@ -401,15 +605,16 @@ function 画文字($绘, $文本, $字体, $颜色, [System.Drawing.RectangleF]$
     $格式.Dispose()
 }
 
-$字标题  = New-Object System.Drawing.Font('Microsoft YaHei UI', 14, [System.Drawing.FontStyle]::Bold)
-$字名称  = New-Object System.Drawing.Font('Microsoft YaHei UI', 11, [System.Drawing.FontStyle]::Bold)
-$字说明  = New-Object System.Drawing.Font('Microsoft YaHei UI', 9)
-$字百分比 = New-Object System.Drawing.Font('Microsoft YaHei UI', 10, [System.Drawing.FontStyle]::Bold)
-$字兆    = New-Object System.Drawing.Font('Microsoft YaHei UI', 9)
-$字按钮  = New-Object System.Drawing.Font('Microsoft YaHei UI', 9.5)
-$字状态  = New-Object System.Drawing.Font('Microsoft YaHei UI', 9)
-$字顶部  = New-Object System.Drawing.Font('Microsoft YaHei UI', 9.5)
-$字署名  = New-Object System.Drawing.Font('Microsoft YaHei UI', 8.5)
+$基础字体名 = [System.Drawing.SystemFonts]::MessageBoxFont.FontFamily.Name
+$字标题  = New-Object System.Drawing.Font($基础字体名, 14, [System.Drawing.FontStyle]::Bold)
+$字名称  = New-Object System.Drawing.Font($基础字体名, 11, [System.Drawing.FontStyle]::Bold)
+$字说明  = New-Object System.Drawing.Font($基础字体名, 9)
+$字百分比 = New-Object System.Drawing.Font($基础字体名, 10, [System.Drawing.FontStyle]::Bold)
+$字兆    = New-Object System.Drawing.Font($基础字体名, 9)
+$字按钮  = New-Object System.Drawing.Font($基础字体名, 9.5)
+$字状态  = New-Object System.Drawing.Font($基础字体名, 9)
+$字顶部  = New-Object System.Drawing.Font($基础字体名, 9.5)
+$字署名  = New-Object System.Drawing.Font($基础字体名, 8.5)
 
 $script:卡片集 = @()
 $script:上次签名 = ''
@@ -446,7 +651,7 @@ $script:提示.Add_Popup({
 })
 
 $窗体 = New-Object System.Windows.Forms.Form
-$窗体.Text = '显存管家'
+$窗体.Text = 文('应用名')
 $窗体.Size = New-Object System.Drawing.Size(560, 700)
 $窗体.MinimumSize = New-Object System.Drawing.Size(440, 480)
 $窗体.StartPosition = 'CenterScreen'
@@ -466,6 +671,7 @@ $拖动 = {
 $顶栏 = New-Object System.Windows.Forms.Panel
 $顶栏.Dock = 'Top'
 $顶栏.Height = 92
+$顶栏.Width = $窗体.ClientSize.Width
 $顶栏.BackColor = $底色
 $顶栏.Add_MouseDown($拖动)
 $顶栏.Add_Paint({
@@ -479,7 +685,7 @@ $顶栏.Add_Paint({
 })
 
 $标题 = New-Object System.Windows.Forms.Label
-$标题.Text = '显存管家'
+$标题.Text = 文('应用名')
 $标题.Font = $字标题
 $标题.ForeColor = $主字色
 $标题.AutoSize = $true
@@ -487,7 +693,7 @@ $标题.Location = New-Object System.Drawing.Point(18, 10)
 $标题.Add_MouseDown($拖动)
 
 $头部信息 = New-Object System.Windows.Forms.Label
-$头部信息.Text = '读取中…'
+$头部信息.Text = 文('读取中')
 $头部信息.Font = $字顶部
 $头部信息.ForeColor = $次字色
 $头部信息.AutoSize = $true
@@ -497,7 +703,7 @@ $头部信息.Add_MouseDown($拖动)
 function 做顶钮($文本, $横坐标) {
     $钮 = New-Object System.Windows.Forms.Label
     $钮.Text = $文本
-    $钮.Font = New-Object System.Drawing.Font('Microsoft YaHei UI', 13)
+    $钮.Font = New-Object System.Drawing.Font($基础字体名, 13)
     $钮.ForeColor = $次字色
     $钮.Size = New-Object System.Drawing.Size(40, 40)
     $钮.Location = New-Object System.Drawing.Point($横坐标, 8)
@@ -508,21 +714,33 @@ function 做顶钮($文本, $横坐标) {
     $钮.Add_MouseLeave({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $底色; $发送者.ForeColor = $次字色 } })
     return $钮
 }
-$刷新钮 = 做顶钮 '⟳' (-98)
-$关闭钮 = 做顶钮 '✕' (-50)
+$语言钮 = New-Object System.Windows.Forms.Label
+$语言钮.Text = 文('语言')
+$语言钮.Font = $字按钮
+$语言钮.ForeColor = $次字色
+$语言钮.Size = New-Object System.Drawing.Size(84, 40)
+$语言钮.Location = New-Object System.Drawing.Point(360, 8)
+$语言钮.TextAlign = 'MiddleCenter'
+$语言钮.Cursor = 'Hand'
+$语言钮.Anchor = 'Top,Right'
+$语言钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $悬停色; $发送者.ForeColor = $主字色 } })
+$语言钮.Add_MouseLeave({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $底色; $发送者.ForeColor = $次字色 } })
+$语言钮.Add_Click({ 打开语言菜单 })
+$刷新钮 = 做顶钮 '⟳' 452
+$关闭钮 = 做顶钮 '✕' 500
 $刷新钮.Add_Click({ $script:上次签名 = ''; 重填 })
 $关闭钮.Add_Click({ $窗体.Close() })
 $关闭钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = [System.Drawing.Color]::FromArgb(196, 48, 48); $发送者.ForeColor = [System.Drawing.Color]::White } })
 $关闭钮.Add_MouseLeave({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $底色; $发送者.ForeColor = $次字色 } })
 
-$顶栏.Controls.AddRange(@($标题, $头部信息, $刷新钮, $关闭钮))
+$顶栏.Controls.AddRange(@($标题, $头部信息, $语言钮, $刷新钮, $关闭钮))
 
 $底栏 = New-Object System.Windows.Forms.Panel
 $底栏.Dock = 'Bottom'
 $底栏.Height = 34
 $底栏.BackColor = [System.Drawing.Color]::FromArgb(23, 24, 27)
 $状态 = New-Object System.Windows.Forms.Label
-$状态.Text = '就绪'
+$状态.Text = 文('就绪')
 $状态.Font = $字状态
 $状态.ForeColor = $次字色
 $状态.AutoSize = $false
@@ -531,7 +749,7 @@ $状态.Dock = 'Fill'
 $状态.TextAlign = 'MiddleLeft'
 $状态.Padding = New-Object System.Windows.Forms.Padding(16, 0, 0, 0)
 $署名 = New-Object System.Windows.Forms.Label
-$署名.Text = '星辰软件 · qq591277494@126.com · v1.00'
+$署名.Text = '星辰软件 · qq591277494@126.com · v1.01'
 $署名.Font = $字署名
 $署名.ForeColor = [System.Drawing.Color]::FromArgb(110, 114, 120)
 $署名.AutoSize = $false
@@ -700,12 +918,12 @@ function 消息窗($标题文本, $正文, $模式, $警示 = '') {
     }
 
     if ($模式 -eq 'danger') {
-        $取消钮 = 圆角钮 '取消' 96 $按钮色 $次字色
+        $取消钮 = 圆角钮 (文('取消')) 96 $按钮色 $次字色
         $取消钮.Location = New-Object System.Drawing.Point(172, ($总高 - 60))
         $取消钮.DialogResult = 'No'
         $取消钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $悬停色; $发送者.ForeColor = $主字色 } })
         $取消钮.Add_MouseLeave({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $按钮色; $发送者.ForeColor = $次字色 } })
-        $危险钮 = 圆角钮 '仍然结束' 116 ([System.Drawing.Color]::FromArgb(196, 48, 48)) ([System.Drawing.Color]::White)
+        $危险钮 = 圆角钮 (文('仍然结束')) 116 ([System.Drawing.Color]::FromArgb(196, 48, 48)) ([System.Drawing.Color]::White)
         $危险钮.Location = New-Object System.Drawing.Point(280, ($总高 - 60))
         $危险钮.DialogResult = 'Yes'
         $危险钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = [System.Drawing.Color]::FromArgb(224, 68, 68) } })
@@ -714,12 +932,12 @@ function 消息窗($标题文本, $正文, $模式, $警示 = '') {
         $对话框.AcceptButton = $取消钮
         $对话框.CancelButton = $取消钮
     } elseif ($模式 -eq 'ask') {
-        $确认钮 = 圆角钮 '结束' 96 ([System.Drawing.Color]::FromArgb(196, 48, 48)) ([System.Drawing.Color]::White)
+        $确认钮 = 圆角钮 (文('结束')) 96 ([System.Drawing.Color]::FromArgb(196, 48, 48)) ([System.Drawing.Color]::White)
         $确认钮.Location = New-Object System.Drawing.Point(300, ($总高 - 60))
         $确认钮.DialogResult = 'Yes'
         $确认钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = [System.Drawing.Color]::FromArgb(224, 68, 68) } })
         $确认钮.Add_MouseLeave({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = [System.Drawing.Color]::FromArgb(196, 48, 48) } })
-        $取消钮 = 圆角钮 '取消' 96 $按钮色 $次字色
+        $取消钮 = 圆角钮 (文('取消')) 96 $按钮色 $次字色
         $取消钮.Location = New-Object System.Drawing.Point(192, ($总高 - 60))
         $取消钮.DialogResult = 'No'
         $取消钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $悬停色; $发送者.ForeColor = $主字色 } })
@@ -728,7 +946,7 @@ function 消息窗($标题文本, $正文, $模式, $警示 = '') {
         $对话框.AcceptButton = $确认钮
         $对话框.CancelButton = $取消钮
     } else {
-        $知道钮 = 圆角钮 '知道了' 96 $按钮色 $主字色
+        $知道钮 = 圆角钮 (文('知道了')) 96 $按钮色 $主字色
         $知道钮.Location = New-Object System.Drawing.Point(300, ($总高 - 60))
         $知道钮.DialogResult = 'OK'
         $知道钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = $悬停色 } })
@@ -750,18 +968,18 @@ function 消息窗($标题文本, $正文, $模式, $警示 = '') {
 
 [System.Windows.Forms.Application]::add_ThreadException({
     param($发送者, $事件)
-    消息窗 '出错了' $事件.Exception.Message 'stop' | Out-Null
+    消息窗 (文('出错')) $事件.Exception.Message 'stop' | Out-Null
 })
 
 function 结束进程($进程) {
     $是系统 = ($系统守卫 -contains $进程.名称.ToLower())
     if ($是系统) {
-        $后果 = '这是 Windows 系统核心组件，结束后可能导致蓝屏、强制注销或桌面丢失，未保存的工作会全部消失。'
-        if ($进程.名称.ToLower() -eq 'dwm') { $后果 = '桌面窗口管理器负责桌面合成，结束后屏幕会黑屏闪断；Windows 通常会自动重启它，期间桌面和窗口会短暂消失。' }
-        if ($进程.名称.ToLower() -eq 'explorer') { $后果 = '文件资源管理器同时是桌面与任务栏的宿主，结束后桌面和任务栏会消失，需要手动重新启动 explorer。' }
-        $选择 = 消息窗 '危险操作' "确定要结束系统组件 $($进程.名称) (PID $($进程.进程号)) 吗？" 'danger' $后果
+        $后果 = 文('后果通用')
+        if ($进程.名称.ToLower() -eq 'dwm') { $后果 = 文('后果dwm') }
+        if ($进程.名称.ToLower() -eq 'explorer') { $后果 = 文('后果explorer') }
+        $选择 = 消息窗 (文('危险操作')) ((文('确认系统格式')) -f $进程.名称, $进程.进程号) 'danger' $后果
     } else {
-        $选择 = 消息窗 '结束进程' "确定结束 $($进程.名称) (PID $($进程.进程号))？`n未保存的工作会丢。" 'ask'
+        $选择 = 消息窗 (文('结束进程')) (((文('确认结束格式')) -f $进程.名称, $进程.进程号) + "`n" + (文('未保存'))) 'ask'
     }
     if ($选择 -ne 'Yes') { return }
     try {
@@ -770,7 +988,7 @@ function 结束进程($进程) {
         $script:上次签名 = ''
         重填
     } catch {
-        消息窗 '结束失败' ("可能需要以管理员身份运行：`n" + $_.Exception.Message) 'stop' | Out-Null
+        消息窗 (文('结束失败')) ((文('需管理员')) + "`n" + $_.Exception.Message) 'stop' | Out-Null
     }
 }
 
@@ -828,7 +1046,7 @@ function 造卡($进程, [int]$宽) {
     $卡.Add_MouseDoubleClick({ param($发送者, $事件) 结束进程 $发送者.Tag.进程 })
     $卡.Add_MouseEnter({ param($发送者, $事件) $script:悬停进程 = $发送者.Tag.进程.进程号; $发送者.Invalidate() })
     $卡.Add_MouseLeave({ param($发送者, $事件) $script:悬停进程 = -1; $发送者.Invalidate() })
-    $script:提示.SetToolTip($卡, "$($进程.路径)`n专用 $($进程.专用) MB · 共享 $($进程.共享) MB")
+    $script:提示.SetToolTip($卡, "$($进程.路径)`n$(文('专用')) $($进程.专用) MB · $(文('共享')) $($进程.共享) MB")
 
     $按钮 = New-Object System.Windows.Forms.Button
     $按钮.Size = New-Object System.Drawing.Size(72, 34)
@@ -839,12 +1057,12 @@ function 造卡($进程, [int]$宽) {
     $按钮.Font = $字按钮
     $按钮.Cursor = 'Hand'
     if ($是系统) {
-        $按钮.Text = '系统'
+        $按钮.Text = 文('系统')
         $按钮.Enabled = $false
         $按钮.BackColor = $卡片色
         $按钮.ForeColor = [System.Drawing.Color]::FromArgb(110, 114, 120)
     } else {
-        $按钮.Text = '结束'
+        $按钮.Text = 文('结束')
         $按钮.BackColor = $按钮色
         $按钮.ForeColor = $次字色
         $按钮.Add_MouseEnter({ param($发送者, $事件) if ($发送者 -is [System.Windows.Forms.Control]) { $发送者.BackColor = [System.Drawing.Color]::FromArgb(196, 48, 48); $发送者.ForeColor = [System.Drawing.Color]::White } })
@@ -862,12 +1080,13 @@ function 重填 {
 }
 
 function 填充($进程表) {
+    $script:上次进程表 = $进程表
     if ($script:显卡.总 -gt 0) {
-        $头部信息.Text = '整卡 {0:N2} / {1:N2} GB · 已用 {2:N0}%' -f ($script:显卡.用 / 1024), ($script:显卡.总 / 1024), ($script:显卡.用 / $script:显卡.总 * 100)
+        $头部信息.Text = (文('整卡格式')) -f ($script:显卡.用 / 1024), ($script:显卡.总 / 1024), ($script:显卡.用 / $script:显卡.总 * 100)
     } else {
         $合计 = 0
         foreach ($进程 in $进程表) { $合计 += $进程.专用 }
-        $头部信息.Text = '专用合计 {0:N0} MB · 整卡总量未读到' -f $合计
+        $头部信息.Text = (文('未读到格式')) -f $合计
     }
     $顶栏.Invalidate()
 
@@ -875,7 +1094,7 @@ function 填充($进程表) {
     if ($签名 -eq $script:上次签名 -and $script:卡片集.Count -gt 0) {
         $合计 = 0
         foreach ($进程 in $进程表) { $合计 += $进程.专用 }
-        $状态.Text = '{0} 个进程 · 专用合计 {1:N0} MB' -f $进程表.Count, $合计
+        $状态.Text = (文('状态格式')) -f $进程表.Count, $合计
         return
     }
     $script:上次签名 = $签名
@@ -903,7 +1122,84 @@ function 填充($进程表) {
     重算滚动
     $合计 = 0
     foreach ($进程 in $进程表) { $合计 += $进程.专用 }
-    $状态.Text = '{0} 个进程 · 专用合计 {1:N0} MB' -f $进程表.Count, $合计
+    $状态.Text = (文('状态格式')) -f $进程表.Count, $合计
+}
+
+function 设置语言($代码) {
+    $script:语言选择 = $代码
+    存设置
+    $script:实际语言 = 解析语言 $代码
+    $script:简介缓存 = @{}
+    $script:上次签名 = ''
+    $窗体.Text = 文('应用名')
+    $标题.Text = 文('应用名')
+    $语言钮.Text = 文('语言')
+    if ($script:上次进程表 -and @($script:上次进程表).Count -gt 0) {
+        填充 $script:上次进程表
+    } else {
+        $头部信息.Text = 文('读取中')
+        $状态.Text = 文('就绪')
+    }
+}
+
+function 打开语言菜单 {
+    if ($script:语言窗 -and $script:语言窗.Visible) {
+        $script:语言窗.Close()
+        return
+    }
+    $菜单 = New-Object System.Windows.Forms.Form
+    $菜单.FormBorderStyle = 'None'
+    $菜单.ShowInTaskbar = $false
+    $菜单.StartPosition = 'Manual'
+    $菜单.BackColor = $底色
+    $菜单.Font = $字说明
+    $菜单.Size = New-Object System.Drawing.Size(200, 178)
+    $菜单.TopMost = $true
+    $菜单.Region = New-Object System.Drawing.Region((圆角路径 (New-Object System.Drawing.Rectangle(0, 0, 200, 178)) 12))
+    $菜单.Add_Paint({
+        param($发送者, $事件)
+        $绘 = $事件.Graphics
+        $绘.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+        $路径 = 圆角路径 (New-Object System.Drawing.Rectangle(0, 0, 199, 177)) 12
+        $笔 = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(70, 71, 76), 1)
+        $绘.DrawPath($笔, $路径)
+        $笔.Dispose()
+        $路径.Dispose()
+    })
+    $项表 = @(
+        @{ 代码 = 'auto'; 文字 = (文('跟随系统')) },
+        @{ 代码 = 'zh'; 文字 = '中文' },
+        @{ 代码 = 'en'; 文字 = 'English' },
+        @{ 代码 = 'ja'; 文字 = '日本語' },
+        @{ 代码 = 'ko'; 文字 = '한국어' }
+    )
+    $序 = 0
+    foreach ($项 in $项表) {
+        $行 = New-Object System.Windows.Forms.Label
+        $文字 = $项.文字
+        if ($项.代码 -eq $script:语言选择) { $文字 = '● ' + $文字 }
+        $行.Text = $文字
+        $行.Font = $字说明
+        $行.ForeColor = $主字色
+        $行.BackColor = $底色
+        $行.Cursor = 'Hand'
+        $行.TextAlign = 'MiddleLeft'
+        $行.Size = New-Object System.Drawing.Size(184, 30)
+        $行.Location = New-Object System.Drawing.Point(8, (8 + $序 * 32))
+        $行.Tag = $项.代码
+        if ($项.代码 -eq $script:语言选择) { $行.ForeColor = $副色 }
+        $行.Add_MouseEnter({ param($发送者, $事件) $发送者.BackColor = $悬停色 })
+        $行.Add_MouseLeave({ param($发送者, $事件) $发送者.BackColor = $底色 })
+        $行.Add_Click({ param($发送者, $事件) 设置语言 $发送者.Tag; if ($script:语言窗) { $script:语言窗.Close() } })
+        $菜单.Controls.Add($行)
+        $序++
+    }
+    $按钮矩形 = $语言钮.RectangleToScreen($语言钮.ClientRectangle)
+    $菜单.Location = New-Object System.Drawing.Point(($按钮矩形.Right - 200), ($按钮矩形.Bottom + 6))
+    $菜单.Add_Deactivate({ param($发送者, $事件) $发送者.Close() })
+    $script:语言窗 = $菜单
+    $菜单.Show($窗体)
+    $菜单.Activate()
 }
 
 $窗体.Controls.Add($滚动区)
@@ -939,10 +1235,10 @@ $加载窗.Add_Paint({
     $绘 = $事件.Graphics
     $绘.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
     $标题刷 = New-Object System.Drawing.SolidBrush($主字色)
-    $绘.DrawString('显存管家', $字标题, $标题刷, 24, 20)
+    $绘.DrawString((文('应用名')), $字标题, $标题刷, 24, 20)
     $标题刷.Dispose()
     $副刷 = New-Object System.Drawing.SolidBrush($次字色)
-    $绘.DrawString('正在读取显存信息', $字说明, $副刷, 24, 66)
+    $绘.DrawString((文('加载中')), $字说明, $副刷, 24, 66)
     $副刷.Dispose()
     for ($序 = 0; $序 -lt 3; $序++) {
         $亮度 = 60

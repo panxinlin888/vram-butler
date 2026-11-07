@@ -1,4 +1,4 @@
-﻿# 显存管家 v1.00
+﻿# 显存管家 v1.01
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
@@ -11,7 +11,7 @@
 显存管家读取 Windows 的 GPU Process Memory 性能计数器，按专用显存从高到低列出所有占用显存的进程。双击卡片即可结束进程并立即回收显存。顶部在 NVIDIA 驱动可用时显示整卡占用进度条。
 
 - 源码公开、**非商业**：个人、教育、研究免费使用；商业使用需要单独授权，见[许可证](#许可证)
-- 作者：星辰软件 · qq591277494@126.com · 版本 1.00
+- 作者：星辰软件 · qq591277494@126.com · 版本 1.01
 
 ## 功能
 
@@ -23,13 +23,14 @@
 - 滚轮浏览列表，没有滚动条
 - 现代启动体验：三点跳动的加载窗，加载完成后淡入主界面
 - 所有弹窗、提示、按钮同一套深色风格
+- 界面语言：中文 / English / 日本語 / 한국어，默认跟随系统，点顶栏语言按钮按钮切换并记住选择
 - 无后台常驻、无定时轮询、不写注册表、不联网
 
 ![加载中](loading.png)
 
 ## 快速启动
 
-1. 下载 [最新版本](https://github.com/panxinlin888/vram-butler/releases/latest)（资产名 `vram-butler-1.00.exe`，程序内名称为显存管家），或按下方说明自行构建
+1. 从 Releases 下载 `显存管家.exe`（或按下方说明自行构建）
 2. 双击即可运行，无需安装任何运行库
 3. 要结束以管理员权限运行的程序，右键 EXE → 以管理员身份运行
 
@@ -97,13 +98,6 @@ pwsh 显存查看与释放.ps1 -后台 -目标程序 "msedge,chrome,wechat" -已
 
 结束 DWM 会让桌面黑屏闪断，Windows 通常会自行重启它；结束 CSRSS、WINLOGON、LSASS 等可能导致立即蓝屏或注销。程序不会静默结束任何系统组件，必须明确点击红色按钮。
 
-## 项目
-
-- [参与贡献](CONTRIBUTING.md)
-- [安全策略](SECURITY.md)
-- [更新日志](CHANGELOG.md)
-- [智能体接口](智能体接口.md)
-
 ## 许可证
 
 **PolyForm Noncommercial License 1.0.0**，详见 [LICENSE](LICENSE)。
@@ -124,7 +118,7 @@ Invoke-ps2exe -inputFile 显存查看与释放.ps1 -outputFile 显存管家.exe 
   -title 显存管家 -description "显存查看与释放 · 星辰软件" `
   -company 星辰软件 -product 显存管家 `
   -copyright "© 2026 星辰软件 · qq591277494@126.com" `
-  -version 1.0.0.0
+  -version 1.0.1.0
 ```
 
 源码为单文件，方法、类、变量全部中文命名，除系统接口引用外无英文标识符，无任何注释。

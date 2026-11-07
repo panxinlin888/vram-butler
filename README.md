@@ -1,4 +1,4 @@
-﻿# VRAM Butler (显存管家) v1.00
+﻿# VRAM Butler (显存管家) v1.01
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
@@ -11,7 +11,7 @@ A tiny Windows utility that shows per-process video memory usage and releases VR
 VRAM Butler reads the Windows GPU Process Memory performance counters and lists every process that holds video memory, sorted by dedicated usage. Double-click a card to end the process and reclaim its VRAM immediately. A whole-card usage bar is shown in the header when NVIDIA's `nvidia-smi` is available.
 
 - Source-available and **noncommercial**: free for personal, educational and research use. Commercial use requires a separate license — see [License](#license).
-- Author: 星辰软件 (Xingchen Software) · qq591277494@126.com · version 1.00
+- Author: 星辰软件 (Xingchen Software) · qq591277494@126.com · version 1.01
 
 ## Features
 
@@ -23,13 +23,14 @@ VRAM Butler reads the Windows GPU Process Memory performance counters and lists 
 - Mouse-wheel browsing without any scrollbar
 - Modern startup: bouncing-dot loading window, then a smooth fade-in
 - Every dialog and tooltip uses the same dark visual style
+- UI languages: 中文 / English / 日本語 / 한국어; follows the system by default, switch with the 文 button in the header (the choice is remembered)
 - No background service, no polling, no registry writes, no telemetry
 
 ![Loading](loading.png)
 
 ## Quick start
 
-1. Download [the latest release](https://github.com/panxinlin888/vram-butler/releases/latest) (asset `vram-butler-1.00.exe`; the app itself is named 显存管家), or build it yourself (see below).
+1. Download `显存管家.exe` from Releases (or build it yourself, see below).
 2. Double-click it. No runtime installation is required.
 3. To end elevated processes, right-click the EXE and choose **Run as administrator**.
 
@@ -97,13 +98,6 @@ Ending a standard Windows core component is allowed, but the app shows a red war
 
 Ending DWM briefly blanks the desktop while Windows restarts it; ending CSRSS, WINLOGON or LSASS can cause an immediate blue screen or logoff. The app never ends these silently — the red button must be clicked explicitly.
 
-## Project
-
-- [Contributing](CONTRIBUTING.md)
-- [Security policy](SECURITY.md)
-- [Changelog](CHANGELOG.md)
-- [Agent interface](智能体接口.md)
-
 ## License
 
 **PolyForm Noncommercial License 1.0.0** — see [LICENSE](LICENSE).
@@ -124,7 +118,7 @@ Invoke-ps2exe -inputFile 显存查看与释放.ps1 -outputFile 显存管家.exe 
   -title 显存管家 -description "显存查看与释放 · 星辰软件" `
   -company 星辰软件 -product 显存管家 `
   -copyright "© 2026 星辰软件 · qq591277494@126.com" `
-  -version 1.0.0.0
+  -version 1.0.1.0
 ```
 
 The source is a single file with Chinese identifiers, no comments, and only platform API references left in English.
