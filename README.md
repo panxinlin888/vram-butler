@@ -1,4 +1,4 @@
-﻿# VRAM Butler (显存管家) v1.01
+# VRAM Butler (显存管家) v1.01
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
@@ -6,6 +6,11 @@ A tiny Windows utility that shows per-process video memory usage and releases VR
 
 ![VRAM Butler](screenshot.png)
 
+## A note from the creator
+
+I built this tool for a simple reason: when deploying large models, VRAM is often quietly held by other applications, and checking each one is painfully slow. So I made this small graphical tool. It opens quickly and shows at a glance how much VRAM every process is using, so you know exactly which process to end and how much you can reclaim. It now supports multiple languages as well, so people in different language environments can pick it up easily.
+
+— Xingchen Software
 ## About
 
 VRAM Butler reads the Windows GPU Process Memory performance counters and lists every process that holds video memory, sorted by dedicated usage. Double-click a card to end the process and reclaim its VRAM immediately. A whole-card usage bar is shown in the header when NVIDIA's `nvidia-smi` is available.
