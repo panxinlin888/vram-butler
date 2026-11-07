@@ -29,7 +29,7 @@
 
 ## 快速启动
 
-1. 下载 [最新版本](https://github.com/panxinlin888/vram-butler/releases/latest)（`显存管家.exe`），或按下方说明自行构建
+1. 下载 [最新版本](https://github.com/panxinlin888/vram-butler/releases/latest)（资产名 `vram-butler-1.00.exe`，程序内名称为显存管家），或按下方说明自行构建
 2. 双击即可运行，无需安装任何运行库
 3. 要结束以管理员权限运行的程序，右键 EXE → 以管理员身份运行
 

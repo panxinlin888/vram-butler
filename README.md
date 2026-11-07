@@ -29,7 +29,7 @@ VRAM Butler reads the Windows GPU Process Memory performance counters and lists 
 
 ## Quick start
 
-1. Download [the latest release](https://github.com/panxinlin888/vram-butler/releases/latest) (`显存管家.exe`), or build it yourself (see below).
+1. Download [the latest release](https://github.com/panxinlin888/vram-butler/releases/latest) (asset `vram-butler-1.00.exe`; the app itself is named 显存管家), or build it yourself (see below).
 2. Double-click it. No runtime installation is required.
 3. To end elevated processes, right-click the EXE and choose **Run as administrator**.
 
