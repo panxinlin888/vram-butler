@@ -29,7 +29,7 @@
 
 ## 快速启动
 
-1. 从 Releases 下载 `显存管家.exe`（或按下方说明自行构建）
+1. 下载 [最新版本](https://github.com/panxinlin888/vram-butler/releases/latest)（`显存管家.exe`），或按下方说明自行构建
 2. 双击即可运行，无需安装任何运行库
 3. 要结束以管理员权限运行的程序，右键 EXE → 以管理员身份运行
 
@@ -96,6 +96,13 @@ pwsh 显存查看与释放.ps1 -后台 -目标程序 "msedge,chrome,wechat" -已
 ![危险操作](danger.png)
 
 结束 DWM 会让桌面黑屏闪断，Windows 通常会自行重启它；结束 CSRSS、WINLOGON、LSASS 等可能导致立即蓝屏或注销。程序不会静默结束任何系统组件，必须明确点击红色按钮。
+
+## 项目
+
+- [参与贡献](CONTRIBUTING.md)
+- [安全策略](SECURITY.md)
+- [更新日志](CHANGELOG.md)
+- [智能体接口](智能体接口.md)
 
 ## 许可证
 

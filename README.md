@@ -29,7 +29,7 @@ VRAM Butler reads the Windows GPU Process Memory performance counters and lists 
 
 ## Quick start
 
-1. Download `显存管家.exe` from Releases (or build it yourself, see below).
+1. Download [the latest release](https://github.com/panxinlin888/vram-butler/releases/latest) (`显存管家.exe`), or build it yourself (see below).
 2. Double-click it. No runtime installation is required.
 3. To end elevated processes, right-click the EXE and choose **Run as administrator**.
 
@@ -96,6 +96,13 @@ Ending a standard Windows core component is allowed, but the app shows a red war
 ![Danger warning](danger.png)
 
 Ending DWM briefly blanks the desktop while Windows restarts it; ending CSRSS, WINLOGON or LSASS can cause an immediate blue screen or logoff. The app never ends these silently — the red button must be clicked explicitly.
+
+## Project
+
+- [Contributing](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+- [Changelog](CHANGELOG.md)
+- [Agent interface](智能体接口.md)
 
 ## License
 

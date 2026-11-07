@@ -1,0 +1,45 @@
+name: validate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: PowerShell syntax check
+        shell: pwsh
+        run: |
+          $errors = $null
+          $source = Join-Path $PWD '显存查看与释放.ps1'
+          [System.Management.Automation.Language.Parser]::ParseFile($source, [ref]$null, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error ("Line " + $_.Extent.StartLineNumber + ": " + $_.Message) }
+            exit 1
+          }
+          Write-Host 'Syntax OK'
+
+      - name: Source has no comment lines
+        shell: pwsh
+        run: |
+          $lines = Get-Content (Join-Path $PWD '显存查看与释放.ps1')
+          $commentLines = @($lines | Where-Object { $_ -match '^\s*#' })
+          if ($commentLines.Count -gt 0) {
+            Write-Error ("Comment lines found: " + $commentLines.Count)
+            exit 1
+          }
+          Write-Host 'No comment lines'
+
+      - name: Headless help smoke test
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PWD '显存查看与释放.ps1') -帮助
+          if ($LASTEXITCODE -ne 0) { exit 1 }

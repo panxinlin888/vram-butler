@@ -1,0 +1,61 @@
+name: Bug report
+description: Report a problem with VRAM Butler
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue. Please remove tokens and personal data before submitting.
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 23H2, 64-bit
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and driver
+      placeholder: NVIDIA RTX 4070, driver 566.36
+  - type: dropdown
+    id: version
+    attributes:
+      label: VRAM Butler version
+      options:
+        - "1.00"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start ...
+        2. Click ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or result JSON
+      description: Drag screenshots here, or paste the JSON written by the headless mode.
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues before opening this report.
+          required: true
+        - label: I removed tokens and personal data from this report.
+          required: true
